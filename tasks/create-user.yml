@@ -1,0 +1,129 @@
+- set_fact:
+    iamusers:
+      "{{ lookup('file', 'data/CloudAdmin.txt').splitlines() }}"
+
+- name: Create Cloud Admin users
+  iam:
+    iam_type: user
+    name: "{{ user_login }}"
+    state: present
+    password: "MeMudar123456!"    
+    update_password: on_create    
+  no_log: false
+  loop: "{{ iamusers }}"
+  loop_control:
+    loop_var: user_login
+
+- name: Add user to CloudAdmin Group
+  community.aws.iam_group:
+    name: CloudAdmin
+    users:
+      - "{{ user_login }}"    
+    state: present
+  loop: "{{ iamusers }}"
+  loop_control:
+    loop_var: user_login
+
+- set_fact:
+    iamusers:
+      "{{ lookup('file', 'data/DBA.txt').splitlines() }}"
+
+- name: Create DBA users
+  iam:
+    iam_type: user
+    name: "{{ user_login }}"
+    state: present
+    password: "MeMudar123456!"    
+    update_password: on_create    
+  no_log: false
+  loop: "{{ iamusers }}"
+  loop_control:
+    loop_var: user_login
+
+- name: Add user to DBA Group
+  community.aws.iam_group:
+    name: DBA
+    users:
+      - "{{ user_login }}"    
+    state: present
+  loop: "{{ iamusers }}"
+  loop_control:
+    loop_var: user_login
+
+- set_fact:
+    iamusers:
+      "{{ lookup('file', 'data/Estagiarios.txt').splitlines() }}"
+
+- name: Create Estagiarios users
+  iam:
+    iam_type: user
+    name: "{{ user_login }}"
+    state: present
+    password: "MeMudar123456!"    
+    update_password: on_create    
+  no_log: false
+  loop: "{{ iamusers }}"
+  loop_control:
+    loop_var: user_login
+
+- name: Add user to Estagiarios Group
+  community.aws.iam_group:
+    name: Estagiarios
+    users:
+      - "{{ user_login }}"    
+    state: present
+  loop: "{{ iamusers }}"
+  loop_control:
+    loop_var: user_login
+
+- set_fact:
+    iamusers:
+      "{{ lookup('file', 'data/LinuxAdmin.txt').splitlines() }}"
+
+- name: Create LinuxAdmins users
+  iam:
+    iam_type: user
+    name: "{{ user_login }}"
+    state: present
+    password: "MeMudar123456!"    
+    update_password: on_create    
+  no_log: false
+  loop: "{{ iamusers }}"
+  loop_control:
+    loop_var: user_login
+
+- name: Add user to LinuxAdmin Group
+  community.aws.iam_group:
+    name: LinuxAdmin
+    users:
+      - "{{ user_login }}"    
+    state: present
+  loop: "{{ iamusers }}"
+  loop_control:
+    loop_var: user_login
+
+- set_fact:
+    iamusers:
+      "{{ lookup('file', 'data/RedesAdmin.txt').splitlines() }}"
+
+- name: Create RedesAdmin users
+  iam:
+    iam_type: user
+    name: "{{ user_login }}"
+    state: present
+    password: "MeMudar123456!"    
+    update_password: on_create    
+  no_log: false
+  loop: "{{ iamusers }}"
+  loop_control:
+    loop_var: user_login
+
+- name: Add user to RedesAdmin Group
+  community.aws.iam_group:
+    name: RedesAdmin
+    users:
+      - "{{ user_login }}"    
+    state: present
+  loop: "{{ iamusers }}"
+  loop_control:
+    loop_var: user_login

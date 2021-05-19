@@ -1,0 +1,5 @@
+arn_admin: "arn:aws:iam::aws:policy/AdministratorAccess"
+arn_rdsFA: "arn:aws:iam::aws:policy/AmazonRDSFullAccess"
+arn_ec2FA: "arn:aws:iam::aws:policy/AmazonEC2FullAccess"
+arn_vpcFA: "arn:aws:iam::aws:policy/AmazonVPCFullAccess"
+arn_RO: "arn:aws:iam::aws:policy/ReadOnlyAccess"

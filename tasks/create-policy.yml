@@ -1,0 +1,7 @@
+- name: Create Policy for MFA
+  community.aws.iam_managed_policy:
+    policy_name: "ANSIBLE-MFAPolicy"
+    policy_description: "Enforce MFA"
+    policy: "{{ lookup('file', 'data/mfa_policy.json') }}"
+    state: present
+  register: policy_return

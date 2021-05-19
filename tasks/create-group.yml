@@ -1,0 +1,80 @@
+--- 
+- 
+  set_fact: 
+    iamgroups:      
+      "{{ lookup('file', 'data/Groups.txt').splitlines() }}"
+      
+
+- name: Create especified Groups 
+  community.aws.iam_group: 
+    name: "{{ iamgroup }}"
+    state: present
+  register: newgroups
+  loop: "{{ iamgroups }}"
+  loop_control:
+    loop_var: iamgroup
+
+- name: Attach MFA Policy to Groups
+  community.aws.iam_group:
+    name: "{{ iamgroup }}"
+    managed_policies:
+      - "{{ policy_return.policy.arn }}"
+    state: present
+  loop: "{{ iamgroups }}"
+  loop_control:
+    loop_var: iamgroup
+  
+- name: Attach AdministratorAccess Policy to CloudAdmin
+  community.aws.iam_group:
+    name: "{{ iamgroup }}"
+    managed_policies:
+      - "{{ arn_admin }}"
+    state: present
+  loop: "{{ iamgroups }}"
+  loop_control:
+    loop_var: iamgroup
+  when: iamgroup == "CloudAdmin"
+
+- name: Attach AmazonRDSFullAccess Policy to DBA
+  community.aws.iam_group:
+    name: "{{ iamgroup }}"
+    managed_policies:
+      - "{{ arn_rdsFA }}"
+    state: present
+  loop: "{{ iamgroups }}"
+  loop_control:
+    loop_var: iamgroup
+  when: iamgroup == "DBA"
+
+- name: Attach AmazonEC2FullAccess Policy to LinuxAdmin
+  community.aws.iam_group:
+    name: "{{ iamgroup }}"
+    managed_policies:
+      - "{{ arn_ec2FA }}"
+    state: present
+  loop: "{{ iamgroups }}"
+  loop_control:
+    loop_var: iamgroup
+  when: iamgroup == "LinuxAdmin"
+
+- name: Attach AmazonVPCFullAccess Policy to RedesAdmin
+  community.aws.iam_group:
+    name: "{{ iamgroup }}"
+    managed_policies:
+      - "{{ arn_vpcFA }}"
+    state: present
+  loop: "{{ iamgroups }}"
+  loop_control:
+    loop_var: iamgroup
+  when: iamgroup == "RedesAdmin"
+
+- name: Attach ReadOnlyAccess Policy Policy to Estagiarios
+  community.aws.iam_group:
+    name: "{{ iamgroup }}"
+    managed_policies:
+      - "{{ arn_RO }}"
+    state: present
+  loop: "{{ iamgroups }}"
+  loop_control:
+    loop_var: iamgroup
+  when: iamgroup == "Estagiarios"
